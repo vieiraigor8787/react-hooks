@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
 
-const EditUserForm = props => {
-  const [ user, setUser ] = useState(props.currentUser)
+const EditCategoryForm = props => {
+  const [ categories, setCategories ] = useState(props.currentCategory)
 
   useEffect(
     () => {
-      setUser(props.currentUser)
+      setCategories(props.currentCategory)
     },
     [ props ]
   )
@@ -14,7 +14,7 @@ const EditUserForm = props => {
   const handleInputChange = event => {
     const { name, value } = event.target
 
-    setUser({ ...user, [name]: value })
+    setCategories({ ...categories, [name]: value })
   }
 
   return (
@@ -22,14 +22,11 @@ const EditUserForm = props => {
       onSubmit={event => {
         event.preventDefault()
 
-        props.updateUser(user.id, user)
+        props.updateUser(categories.id, categories)
       }}
     >
-      <label>Name</label>
-      <input type="text" name="name" value={user.name} onChange={handleInputChange} />
-      <label>Username</label>
-      <input type="text" name="username" value={user.username} onChange={handleInputChange} />
-      <button>Update user</button>
+     
+      <button>Alterar categoria</button>
       <button onClick={() => props.setEditing(false)} className="button muted-button">
         Cancel
       </button>
@@ -37,4 +34,4 @@ const EditUserForm = props => {
   )
 }
 
-export default EditUserForm
+export default EditCategoryForm

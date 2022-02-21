@@ -1,72 +1,43 @@
-import React, { useState, Fragment } from 'react'
-import AddUserForm from './forms/AddUserForm'
-import EditUserForm from './forms/EditUserForm'
-import UserTable from './tables/UserTable'
+import React, { useState } from 'react'
+import Table from './tables/Table'
 
 const App = () => {
 	// Data
-	const usersData = [
-		{ id: 1, name: 'Tania', username: 'floppydiskette' },
-		{ id: 2, name: 'Craig', username: 'siliconeidolon' },
-		{ id: 3, name: 'Ben', username: 'benisphere' },
+	const data = [
+		{ id: 1, category: 'Internet', product: ['Fibra'] },
+		{ id: 2, category: 'TV', product: ['Plano básico', 'Plano intermediário', 'Plano completo'] },
+		{ id: 3, category: 'Celular', product: ['Pré', 'Controle', 'Pós'] },
+		{ id: 4, category: 'Fixo', product: ['Básico','DDI ilimitado'] },
+
 	]
 
-	const initialFormState = { id: null, name: '', username: '' }
+	const initialFormState = { id: null, category: '', product: '' }
 
 	// Setting state
-	const [ users, setUsers ] = useState(usersData)
-	const [ currentUser, setCurrentUser ] = useState(initialFormState)
+	const [ categories, setCategories ] = useState(data)
+	const [ currentCategory, setCurrentCategory ] = useState(initialFormState)
 	const [ editing, setEditing ] = useState(false)
 
 	// CRUD operations
-	const addUser = user => {
-		user.id = users.length + 1
-		setUsers([ ...users, user ])
-	}
-
-	const deleteUser = id => {
+	const deleteData = id => {
 		setEditing(false)
 
-		setUsers(users.filter(user => user.id !== id))
+		setCategories(categories.filter(category => category.id !== id))
 	}
 
-	const updateUser = (id, updatedUser) => {
-		setEditing(false)
-
-		setUsers(users.map(user => (user.id === id ? updatedUser : user)))
-	}
-
-	const editRow = user => {
+	const editRow = category => {
 		setEditing(true)
 
-		setCurrentUser({ id: user.id, name: user.name, username: user.username })
+		setCurrentCategory({ id: category.id, category: category.category })
 	}
 
 	return (
 		<div className="container">
-			<h1>CRUD App with Hooks</h1>
+			<h1>CRUD Claro </h1>
 			<div className="flex-row">
 				<div className="flex-large">
-					{editing ? (
-						<Fragment>
-							<h2>Edit user</h2>
-							<EditUserForm
-								editing={editing}
-								setEditing={setEditing}
-								currentUser={currentUser}
-								updateUser={updateUser}
-							/>
-						</Fragment>
-					) : (
-						<Fragment>
-							<h2>Add user</h2>
-							<AddUserForm addUser={addUser} />
-						</Fragment>
-					)}
-				</div>
-				<div className="flex-large">
-					<h2>View users</h2>
-					<UserTable users={users} editRow={editRow} deleteUser={deleteUser} />
+					<h2>Ver </h2>
+					<Table categories={categories} editRow={editRow} deleteData={deleteData} />
 				</div>
 			</div>
 		</div>
